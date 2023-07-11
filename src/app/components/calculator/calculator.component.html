@@ -1,0 +1,47 @@
+<div class="w-full flex justify-center mt-6">
+  <app-card cardTitle="Lets try currency calculator together!" imageSRC="assets/money.jpg" imageALT="Money">
+    <form class="bg-gray-600 p-4 rounded-lg mt-6">
+      <div class="mb-4 flex flex-wrap justify-around items-center">
+        <label for="firstMoneyAmount" class="block text-white font-bold">Converting</label>
+        <input name="firstMoneyAmount" type="number" id="firstMoneyAmount" [(ngModel)]="firstMoneyAmount"
+               (ngModelChange)="convertCurrency()"
+               class="border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500" min="0"
+               (keydown)="preventNegativeInput($event)">
+      </div>
+
+      <div class="mb-4 flex flex-wrap justify-between items-center border-b-2 pb-6 px-2">
+        <label for="firstSelectedCurrency" class="block text-white font-bold">From</label>
+        <select name="firstSelectedCurrency" id="firstSelectedCurrency" [(ngModel)]="firstSelectedCurrency"
+                (ngModelChange)="convertCurrency()"
+                class="border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 text-black font-bold">
+          <option *ngFor="let currency of currencies" [value]="currency"
+                  [selected]="currency === 'USD'">{{ currency }}</option>
+        </select>
+
+        <div class="flex flex-col items-center">
+          <label for="secondSelectedCurrency" class="block text-white font-bold">To</label>
+          <button type="button"
+                  class="w-12 h-10 px-2 py-1 bg-white hover:bg-gray-200 focus:ring-4 focus:outline-none rounded-lg"
+                  title="Change values" (click)="changeCurrencies()">
+            <img class="rounded-t-lg w-full h-full" ngSrc="assets/exchange.png" alt="" height="512" width="512"/>
+          </button>
+        </div>
+
+        <select name="secondSelectedCurrency" id="secondSelectedCurrency" [(ngModel)]="secondSelectedCurrency"
+                (ngModelChange)="convertCurrency()"
+                class="border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 text-black font-bold">
+          <option *ngFor="let currency of currencies" [value]="currency"
+                  [selected]="currency === 'EUR'">{{ currency }}</option>
+        </select>
+      </div>
+
+      <div class="mb-4 flex flex-wrap justify-around items-center w-100">
+        <input name="secondMoneyAmount" type="number" id="secondMoneyAmount" [(ngModel)]="secondMoneyAmount"
+               (ngModelChange)="convertCurrency()"
+               class="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+               [value]="formatCurrency(secondMoneyAmount)" min="0">
+      </div>
+    </form>
+  </app-card>
+</div>
+
