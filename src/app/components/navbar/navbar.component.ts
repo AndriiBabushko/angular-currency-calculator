@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { IExchange } from '../../models/Exchange';
+import { ExchangeService } from '../../services/exchange.service';
 
 @Component({
   selector: 'app-navbar',
@@ -10,24 +9,20 @@ export class NavbarComponent implements OnInit {
   USDRate!: number;
   EURRate!: number;
 
-  constructor(private http: HttpClient) {}
+  constructor(private exchangeService: ExchangeService) {}
 
   ngOnInit() {
     this.fetchExchangeRates();
   }
 
   fetchExchangeRates() {
-    this.http
-      .get<IExchange>('https://api.exchangerate.host/latest?base=USD')
-      .subscribe((response) => {
-        console.log('USD NAVBAR RATE SUCCESS!');
-        this.USDRate = response.rates['UAH'];
-      });
-    this.http
-      .get<IExchange>('https://api.exchangerate.host/latest?base=EUR')
-      .subscribe((response) => {
-        console.log('EUR NAVBAR RATE SUCCESS!');
-        this.EURRate = response.rates['UAH'];
-      });
+    this.exchangeService.getExchange('EUR').subscribe((response) => {
+      console.log('EUR rate successfully fetched!');
+      this.EURRate = response.rates['UAH'];
+    });
+    this.exchangeService.getExchange('USD').subscribe((response) => {
+      console.log('USD rate successfully fetched!');
+      this.USDRate = response.rates['UAH'];
+    });
   }
 }

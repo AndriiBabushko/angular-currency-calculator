@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { IExchange } from '../../models/Exchange';
+import { ExchangeService } from '../../services/exchange.service';
 
 @Component({
   selector: 'app-calculator',
@@ -14,21 +14,19 @@ export class CalculatorComponent implements OnInit {
   firstMoneyAmount: number = 0;
   secondMoneyAmount: number = 0;
 
-  constructor(private http: HttpClient) {}
+  constructor(private exchangeService: ExchangeService) {}
 
   ngOnInit() {
     this.fetchExchangeRates();
   }
 
   fetchExchangeRates() {
-    this.http
-      .get<IExchange>('https://api.exchangerate.host/latest?base=USD')
-      .subscribe((response) => {
-        console.log('Exchange rates fetched!');
-        this.exchangeRates = response;
-        this.currencies = Object.keys(response.rates);
-        this.convertCurrency();
-      });
+    this.exchangeService.getExchange('USD').subscribe((response) => {
+      console.log('Calculator exchange rates fetched!');
+      this.exchangeRates = response;
+      this.currencies = Object.keys(response.rates);
+      this.convertCurrency();
+    });
   }
 
   convertCurrency() {

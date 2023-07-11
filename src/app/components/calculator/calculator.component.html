@@ -5,7 +5,7 @@
         <label for="firstMoneyAmount" class="block text-white font-bold">Converting</label>
         <input name="firstMoneyAmount" type="number" id="firstMoneyAmount" [(ngModel)]="firstMoneyAmount"
                (ngModelChange)="convertCurrency()"
-               class="border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500" min="0"
+               class="border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-gray-500 text-black" min="0"
                (keydown)="preventNegativeInput($event)">
       </div>
 
@@ -13,7 +13,7 @@
         <label for="firstSelectedCurrency" class="block text-white font-bold">From</label>
         <select name="firstSelectedCurrency" id="firstSelectedCurrency" [(ngModel)]="firstSelectedCurrency"
                 (ngModelChange)="convertCurrency()"
-                class="border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 text-black font-bold">
+                class="border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-gray-500 text-black font-bold">
           <option *ngFor="let currency of currencies" [value]="currency"
                   [selected]="currency === 'USD'">{{ currency }}</option>
         </select>
@@ -21,7 +21,7 @@
         <div class="flex flex-col items-center">
           <label for="secondSelectedCurrency" class="block text-white font-bold">To</label>
           <button type="button"
-                  class="w-12 h-10 px-2 py-1 bg-white hover:bg-gray-200 focus:ring-4 focus:outline-none rounded-lg"
+                  class="w-12 h-10 px-3 py-2 bg-white hover:bg-gray-200 focus:ring-4 focus:outline-none rounded-lg"
                   title="Change values" (click)="changeCurrencies()">
             <img class="rounded-t-lg w-full h-full" ngSrc="assets/exchange.png" alt="" height="512" width="512"/>
           </button>
@@ -29,7 +29,7 @@
 
         <select name="secondSelectedCurrency" id="secondSelectedCurrency" [(ngModel)]="secondSelectedCurrency"
                 (ngModelChange)="convertCurrency()"
-                class="border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 text-black font-bold">
+                class="border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-gray-500 text-black font-bold">
           <option *ngFor="let currency of currencies" [value]="currency"
                   [selected]="currency === 'EUR'">{{ currency }}</option>
         </select>
@@ -37,9 +37,8 @@
 
       <div class="mb-4 flex flex-wrap justify-around items-center w-100">
         <input name="secondMoneyAmount" type="number" id="secondMoneyAmount" [(ngModel)]="secondMoneyAmount"
-               (ngModelChange)="convertCurrency()"
-               class="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-               [value]="formatCurrency(secondMoneyAmount)" min="0">
+               class="text-white font-bold w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-gray-500"
+               [value]="formatCurrency(secondMoneyAmount)" min="0" disabled>
       </div>
     </form>
   </app-card>
